@@ -1,0 +1,66 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://scripts/Hud.gd" type="Script" id=1]
+[ext_resource path="res://fonts/stardate_81316.ttf" type="DynamicFontData" id=2]
+[ext_resource path="res://sprites/HUD/coinGold.png" type="Texture" id=3]
+[ext_resource path="res://sprites/HUD/lifeIcon.png" type="Texture" id=4]
+[ext_resource path="res://sprites/items/kunai.png" type="Texture" id=5]
+
+[sub_resource type="DynamicFont" id=1]
+size = 50
+font_data = ExtResource( 2 )
+
+[sub_resource type="DynamicFont" id=2]
+size = 50
+font_data = ExtResource( 2 )
+
+[node name="Barras" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 1 )
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Score" type="Label" parent="CanvasLayer"]
+margin_left = 73.0419
+margin_top = 15.4172
+margin_right = 124.042
+margin_bottom = 65.4172
+custom_fonts/font = SubResource( 1 )
+
+[node name="Lives" type="Label" parent="CanvasLayer"]
+margin_left = 73.8608
+margin_top = 77.6011
+margin_right = 124.861
+margin_bottom = 127.601
+custom_fonts/font = SubResource( 2 )
+
+[node name="Kunais" type="Label" parent="CanvasLayer"]
+margin_left = 73.777
+margin_top = 135.973
+margin_right = 124.777
+margin_bottom = 185.973
+custom_fonts/font = SubResource( 1 )
+
+[node name="Coin" type="TextureRect" parent="CanvasLayer"]
+margin_left = -7.1454
+margin_top = -3.90273
+margin_right = 62.8546
+margin_bottom = 66.0973
+rect_scale = Vector2( 1.25796, 1.21922 )
+texture = ExtResource( 3 )
+
+[node name="Life" type="TextureRect" parent="CanvasLayer"]
+margin_left = 13.1559
+margin_top = 79.4414
+margin_right = 66.1559
+margin_bottom = 124.441
+texture = ExtResource( 4 )
+
+[node name="Kunai" type="TextureRect" parent="CanvasLayer"]
+margin_left = 17.4683
+margin_top = 140.959
+margin_right = 217.468
+margin_bottom = 330.959
+rect_scale = Vector2( 0.2, 0.2 )
+texture = ExtResource( 5 )

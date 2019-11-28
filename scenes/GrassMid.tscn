@@ -1,0 +1,55 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://sprites/levels/tiles_spritesheet.png" type="Texture" id=1]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 34.7569, 34.6269 )
+
+[node name="Tileset" type="Node2D"]
+
+[node name="MidGrass" type="Sprite" parent="."]
+editor/display_folded = true
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 504, 576, 70, 70 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="StaticBody2D" type="StaticBody2D" parent="MidGrass"]
+visible = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="MidGrass/StaticBody2D"]
+shape = SubResource( 1 )
+
+[node name="LeftGrass" type="Sprite" parent="."]
+editor/display_folded = true
+position = Vector2( 95.2262, 0 )
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 504, 648, 70, 68 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="StaticBody2D" type="StaticBody2D" parent="LeftGrass"]
+visible = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LeftGrass/StaticBody2D"]
+shape = SubResource( 1 )
+
+[node name="RightGrass" type="Sprite" parent="."]
+editor/display_folded = true
+position = Vector2( 177.97, 0 )
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 504, 504, 70, 70 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="StaticBody2D" type="StaticBody2D" parent="RightGrass"]
+visible = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RightGrass/StaticBody2D"]
+shape = SubResource( 1 )
