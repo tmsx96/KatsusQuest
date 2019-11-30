@@ -3,11 +3,16 @@ extends Area2D
 const SPEED = 100
 var velocity = Vector2()
 var direction = 1 #direita
+#onready var ANIM_SPRITE = $AnimatedSprite
 
 func set_shuriken_direction(dir):
 	direction = dir
 	if dir == -1:
 		$AnimatedSprite.flip_h = true
+
+#func set_texture(nome_textura, frame):
+	#ANIM_SPRITE.get_sprite_frames().add_animation(nome_textura)
+	#ANIM_SPRITE.get_sprite_frames().add_frame(nome_textura, frame, 0)
 	
 func _physics_process(delta):
 	velocity.x = SPEED * delta * direction * 5

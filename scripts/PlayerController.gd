@@ -12,7 +12,8 @@ export var jumpForce = -200
 export var gravity   = 200
 const extraJumps  = 2
 var jumpsCounter = 0
-var count = 0
+var shooting = false
+var right_side = true
 
 
 func _physics_process(delta):
@@ -24,26 +25,30 @@ func _physics_process(delta):
 		get_tree().change_scene("res://scenes/GameOver.tscn")
 	
 	if Input.is_action_pressed("ui_left"):
+		right_side = false
 		move.x = -speedX
-		$AnimatedSprite.animation = "walking"
-		$AnimatedSprite.flip_h = true
+		$AnimatedSprite.animation = "left_walk"
+		#$AnimatedSprite.flip_h = true
 		if sign($Position2D.position.x) == 1:
 			$Position2D.position.x *= -1
 	elif Input.is_action_pressed("ui_right"):
-		$AnimatedSprite.animation = "walking"
+		right_side = true
+		$AnimatedSprite.animation = "right_walk"
 		move.x = speedX
-		$AnimatedSprite.flip_h = false
+		#$AnimatedSprite.flip_h = false
 		#se o position2D está no lado esquerdo, mude para o lado direito
 		if sign($Position2D.position.x) == -1: 
 			$Position2D.position.x *= -1
 	else:
-		$AnimatedSprite.animation = "idle"
-		move.x = 0
+		if right_side == true:
+			$AnimatedSprite.animation = "right_idle"
+			move.x = 0
+		else:
+			$AnimatedSprite.animation = "left_idle"
+			move.x = 0
 	
-	#if Input.is_key_pressed(KEY_R):
-	
-	#limitar um shuriken por clique
 	if Input.is_action_just_pressed("shoot"):
+		shooting = true
 		if(Global.get_ranged_weapon_() > 0):
 			var shuriken = SHURIKEN.instance() #cria uma shuriken na memoria
 			if sign($Position2D.position.x) == 1:
@@ -54,6 +59,9 @@ func _physics_process(delta):
 			shuriken.position = $Position2D.global_position
 			Global.ranged_weapon_used()
 		
+	#if Input.is_action_just_pressed("attack"):
+		#$AnimatedSprite.animation
+	
 	#usado no doublejump do player: se o personagem estiver no chão, o "jumpsCounter" é zerado
 	if groundRay.is_colliding():
 		#print("esta colidindo" + str(count))

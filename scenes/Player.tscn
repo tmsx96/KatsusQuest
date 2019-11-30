@@ -1,40 +1,70 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=26 format=2]
 
 [ext_resource path="res://scripts/PlayerController.gd" type="Script" id=1]
-[ext_resource path="res://sprites/player/p1_stand.png" type="Texture" id=2]
-[ext_resource path="res://sprites/player/walk/p1_walk01.png" type="Texture" id=3]
-[ext_resource path="res://sprites/player/walk/p1_walk02.png" type="Texture" id=4]
-[ext_resource path="res://sprites/player/walk/p1_walk03.png" type="Texture" id=5]
-[ext_resource path="res://sprites/player/walk/p1_walk04.png" type="Texture" id=6]
-[ext_resource path="res://sprites/player/walk/p1_walk05.png" type="Texture" id=7]
-[ext_resource path="res://sprites/player/walk/p1_walk06.png" type="Texture" id=8]
-[ext_resource path="res://sprites/player/walk/p1_walk07.png" type="Texture" id=9]
-[ext_resource path="res://sprites/player/walk/p1_walk08.png" type="Texture" id=10]
-[ext_resource path="res://sprites/player/walk/p1_walk09.png" type="Texture" id=11]
-[ext_resource path="res://sprites/player/walk/p1_walk10.png" type="Texture" id=12]
-[ext_resource path="res://sprites/player/walk/p1_walk11.png" type="Texture" id=13]
+[ext_resource path="res://sprites/player/idle/Ninja_left_idle1.png" type="Texture" id=2]
+[ext_resource path="res://sprites/player/idle/Ninja_left_idle2.png" type="Texture" id=3]
+[ext_resource path="res://sprites/player/idle/Ninja_left_idle3.png" type="Texture" id=4]
+[ext_resource path="res://sprites/player/walk/Ninja_left_walk1.png" type="Texture" id=5]
+[ext_resource path="res://sprites/player/walk/Ninja_left_walk2.png" type="Texture" id=6]
+[ext_resource path="res://sprites/player/walk/Ninja_left_walk3.png" type="Texture" id=7]
+[ext_resource path="res://sprites/player/walk/Ninja_left_walk4.png" type="Texture" id=8]
+[ext_resource path="res://sprites/player/run/Ninja_left_run1.png" type="Texture" id=9]
+[ext_resource path="res://sprites/player/run/Ninja_left_run2.png" type="Texture" id=10]
+[ext_resource path="res://sprites/player/run/Ninja_left_run3.png" type="Texture" id=11]
+[ext_resource path="res://sprites/player/run/Ninja_left_run4.png" type="Texture" id=12]
+[ext_resource path="res://sprites/player/walk/Ninja_right_walk01.png" type="Texture" id=13]
+[ext_resource path="res://sprites/player/walk/Ninja_right_walk02.png" type="Texture" id=14]
+[ext_resource path="res://sprites/player/walk/Ninja_right_walk3.png" type="Texture" id=15]
+[ext_resource path="res://sprites/player/walk/Ninja_right_walk4.png" type="Texture" id=16]
+[ext_resource path="res://sprites/player/idle/Ninja_right_idle1.png" type="Texture" id=17]
+[ext_resource path="res://sprites/player/idle/Ninja_right_idle2.png" type="Texture" id=18]
+[ext_resource path="res://sprites/player/idle/Ninja_right_idle3.png" type="Texture" id=19]
+[ext_resource path="res://sprites/player/run/Ninja_right_run1.png" type="Texture" id=20]
+[ext_resource path="res://sprites/player/run/Ninja_right_run2.png" type="Texture" id=21]
+[ext_resource path="res://sprites/player/run/Ninja_right_run3.png" type="Texture" id=22]
+[ext_resource path="res://sprites/player/run/Ninja_right_run4.png" type="Texture" id=23]
 
 [sub_resource type="SpriteFrames" id=1]
 animations = [ {
-"frames": [ ExtResource( 2 ) ],
+"frames": [ ExtResource( 2 ), ExtResource( 3 ), ExtResource( 4 ) ],
 "loop": true,
-"name": "idle",
+"name": "left_idle",
+"speed": 3.0
+}, {
+"frames": [ ExtResource( 5 ), ExtResource( 6 ), ExtResource( 7 ), ExtResource( 8 ) ],
+"loop": true,
+"name": "left_walk",
 "speed": 5.0
 }, {
-"frames": [ ExtResource( 3 ), ExtResource( 4 ), ExtResource( 5 ), ExtResource( 6 ), ExtResource( 7 ), ExtResource( 8 ), ExtResource( 9 ), ExtResource( 10 ), ExtResource( 11 ), ExtResource( 12 ), ExtResource( 13 ) ],
+"frames": [ ExtResource( 9 ), ExtResource( 10 ), ExtResource( 11 ), ExtResource( 12 ) ],
 "loop": true,
-"name": "walking",
-"speed": 15.0
+"name": "left_run",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 13 ), ExtResource( 14 ), ExtResource( 15 ), ExtResource( 16 ) ],
+"loop": true,
+"name": "right_walk",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 17 ), ExtResource( 18 ), ExtResource( 19 ) ],
+"loop": true,
+"name": "right_idle",
+"speed": 3.0
+}, {
+"frames": [ ExtResource( 20 ), ExtResource( 21 ), ExtResource( 22 ), ExtResource( 23 ) ],
+"loop": true,
+"name": "right_run",
+"speed": 5.0
 } ]
 
 [sub_resource type="CapsuleShape2D" id=2]
 radius = 23.0456
-height = 45.9823
+height = 48.4665
 
 [node name="Player" type="KinematicBody2D" groups=[
 "player",
 ]]
-position = Vector2( 84.7512, 76.2192 )
+position = Vector2( 84.7512, 87.7967 )
 script = ExtResource( 1 )
 __meta__ = {
 "_edit_group_": true
@@ -42,19 +72,23 @@ __meta__ = {
 speedX = 300
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
+position = Vector2( -4.51862, 0.513481 )
+scale = Vector2( 3, 3 )
 frames = SubResource( 1 )
-animation = "walking"
-frame = 4
+animation = "right_idle"
+playing = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-visible = false
+position = Vector2( -4.17204, -1.58966 )
 shape = SubResource( 2 )
 
 [node name="ground_ray" type="RayCast2D" parent="."]
-visible = false
-position = Vector2( 0, 30 )
+position = Vector2( -3.17181, 28.7252 )
 enabled = true
 cast_to = Vector2( 0, 20 )
 
 [node name="Position2D" type="Position2D" parent="."]
-position = Vector2( 40.3361, 5.04199 )
+position = Vector2( 32.7599, -12.2399 )
+__meta__ = {
+"_edit_group_": true
+}

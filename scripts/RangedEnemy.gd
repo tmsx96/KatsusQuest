@@ -1,9 +1,8 @@
 extends KinematicBody2D
 
 onready var Player = get_parent().get_node("Player")
-onready var kamikazeBody = $KamikazeBody
-onready var explosionStarter = $ExplosionStarter/CollisionShape2D
-onready var Pos2D = $Position2D 
+#onready var explosionStarter = $ExplosionStarter/CollisionShape2D
+#onready var Pos2D = $Position2D 
 const SHURIKEN = preload("res://scenes/RangedEnemyWeapon.tscn")
 
 var GRAVITY = 10
@@ -11,11 +10,10 @@ const SPEED = 100
 const FLOOR = Vector2(0, -1)
 
 var velocity = Vector2()
-var direction = 1
 var is_entered = null
 #var porsuit = 0
 var dir = 0
-var react_time = 400
+#var react_time = 400
 var next_direction = 1 #era 0
 var next_dir_time = 0
 var is_dead = false
@@ -25,7 +23,6 @@ func dead(var dead_time):
 		is_dead = true
 		velocity = Vector2(0,0)
 		$AnimatedSprite.play("dead")
-		#$CollisionShape2D.disabled = true
 		$DeathTimer.wait_time = dead_time
 		$DeathTimer.start()
 
@@ -36,6 +33,7 @@ func get_random_number():
 #implementar os intervalos entre os tiros de maneira randomica
 func shooting():
 	var shuriken = SHURIKEN.instance()
+	#shuriken.set_texture("default1", "res://sprites/enemies/Ranged Enemy/Projectile-1.png")
 	if sign($Position2D.position.x) == 1:
 		shuriken.set_shuriken_direction(1)
 	else:
@@ -77,7 +75,7 @@ func _physics_process(delta):
 				$Position2D.position.x *= -1
 				$AnimatedSprite.flip_h = true
 				next_direction = -1
-				next_dir_time = OS.get_ticks_msec() + react_time
+				#next_dir_time = OS.get_ticks_msec() + react_time
 				
 				
 			elif Player.position.x > position.x and next_direction != 1:
@@ -86,12 +84,12 @@ func _physics_process(delta):
 				$Position2D.position.x *= -1
 				$AnimatedSprite.flip_h = false
 				next_direction = 1
-				next_dir_time = OS.get_ticks_msec() + react_time
+				#next_dir_time = OS.get_ticks_msec() + react_time
 				
 			if OS.get_ticks_msec() >  next_dir_time:
 				dir = next_direction
-				
-			velocity.x = dir * 250
+			velocity.x = SPEED * next_direction	
+			#velocity.x = dir * 250
 		velocity = move_and_slide(velocity, FLOOR)
 
 #alterar para desativar o modo perseguição quando o jogador sair da plataforma do enemy
@@ -106,7 +104,7 @@ func _on_DeathTimer_timeout():
 func _on_ExplosionStarter_body_entered(body):
 	if body.is_in_group("player"):
 		Global.lost_life()
-		dead(0)
+		dead(0.1)
 		#colocar animação de explosão
 
 

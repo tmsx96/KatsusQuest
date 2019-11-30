@@ -5,7 +5,7 @@ var score = 0
 var lives = LIVES
 var earned_score = 0 #score parcial da fase
 var ranged_weapon = 5
-export(String) var menu_scene = null
+#export(String) var menu_scene = null
 
 #incrementa o score com base no "value" do item coletado e retorna o "value" (pq retorna?)
 func increase_score(value):

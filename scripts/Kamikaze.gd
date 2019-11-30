@@ -1,14 +1,13 @@
 extends KinematicBody2D
 
 onready var Player = get_parent().get_node("Player")
-onready var kamikazeBody = $KamikazeBody
-onready var explosionStarter = $ExplosionStarter/CollisionShape2D
+#onready var kamikazeBody = $KamikazeBody
+#onready var explosionStarter = $ExplosionStarter/CollisionShape2D
 var GRAVITY = 10
 const SPEED = 100
 const FLOOR = Vector2(0, -1)
 
 var velocity = Vector2()
-var direction = 1
 var is_entered = null
 #var porsuit = 0
 var dir = 0
@@ -16,18 +15,16 @@ var react_time = 400
 var next_direction = 1 #era 0
 var next_dir_time = 0
 var is_dead = false
-
-func _ready():
-	pass
+var player_detected = false
 
 func dead(var dead_time):
 	if(is_dead == false): #impede que o inimigo fique em cena se estiver sendo atacado constantemente pela shurikens
 		is_dead = true
 		velocity = Vector2(0,0)
 		$AnimatedSprite.play("dead")
-		#$CollisionShape2D.disabled = true
-		$Timer.wait_time = dead_time
-		$Timer.start()
+		
+		$DeathDelay.wait_time = dead_time
+		$DeathDelay.start()
 
 
 func _physics_process(delta):
@@ -35,10 +32,13 @@ func _physics_process(delta):
 		#velocity.x = SPEED * direction
 		velocity.x = SPEED * next_direction
 		
-		$AnimatedSprite.play("walk")
-		
+		if(player_detected == false):
+			$AnimatedSprite.play("walk")
+		else:
+			$AnimatedSprite.play("running")
 		velocity.y += GRAVITY
-	
+	#elif  is_dead == false and player_detected != false:
+		#$AnimatedSprite.play("running")
 		"""
 		if is_on_wall():
 			direction = direction * -1
@@ -74,9 +74,12 @@ func _physics_process(delta):
 		
 			
 		if is_entered:
+			if player_detected == false:
+				$DeathTimer.wait_time = 5.0
+				$DeathTimer.start()
+				
+			player_detected = true
 			if Player.position.x < position.x and next_direction != -1:
-				#velocity.x = velocity.x * 3
-				#direction = direction * -1
 				$RayCast2D.position.x *= -1
 				$AnimatedSprite.flip_h = true
 				next_direction = -1
@@ -84,7 +87,6 @@ func _physics_process(delta):
 				
 				
 			elif Player.position.x > position.x and next_direction != 1:
-				#velocity.x = velocity.x * 3
 				$RayCast2D.position.x *= -1
 				$AnimatedSprite.flip_h = false
 				next_direction = 1
@@ -110,12 +112,17 @@ func _on_DetectionRange_body_entered(body):
 		#porsuit+=1
 		#print("entrou")
 
-#depois de dois segundos, o enemy sai da tela
 func _on_Timer_timeout():
 	queue_free()
+	print("hm")
 	
 func _on_ExplosionStarter_body_entered(body):
 	if body.is_in_group("player"):
 		Global.lost_life()
-		dead(0)
+		dead(0.1)
 		#colocar animação de explosão
+
+
+func _on_DeathAfterPoursuitStarted_timeout():
+	queue_free()
+	print("ok")
